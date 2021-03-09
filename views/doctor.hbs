@@ -1,0 +1,31 @@
+<button type="submit" class="btn btn-primary"><a class="text-light text-decoration-none" href="doctor/create">CREAR Doctor</a> </button>
+
+<div class="container">
+    <div class="row">
+            <table class="table table-primary">
+                <thead>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Fecha de nacimiento</th>
+                    <th scope="col">Hospital</th>
+                    <th scope="col">Sueldo</th>
+                    <th scope="col">Aqui</th>
+                    <th scope="col">Modificar</th>
+                </thead>
+                <tbody>
+                 {{#each doctor}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{nombre}}</td>
+                        <td>{{fecha_de_nacimiento}}</td>
+                        <td>{{nombreH}}</td>
+                        <td>{{sueldo}}</td>
+                        <td><a href="/doctor/single/{{id}}">Ver Mas</a></td>
+                        <td><a href="/doctor/update/{{id}}">Modificar</a></td>
+                     </tr>
+                {{/each}}
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
