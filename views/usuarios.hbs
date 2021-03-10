@@ -1,0 +1,30 @@
+<div class="container">
+    <button class="btn btn-danger" type="button"><a href="/usuarios/create"> CREAR USUARIO </a></button>
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Admin</th>
+                    <th scope="col">Convertir</th>
+                    <th scope="col">Modificar</th>
+                    <th scope="col">Borrar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each usuarios}}
+                <tr>
+                    <td>{{user}}</td>
+                    <td>{{pass}}</td>
+                    <td>{{admin}}</td>
+                    <td><a href="/usuarios/convert/{{id}}">Convertir</a></td>
+                    <td><a href="/usuarios/update/{{id}}">Modificar</a></td>
+                    <td><a href="/usuarios/delete/{{id}}">Borrar</a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+    </div>
+</div>

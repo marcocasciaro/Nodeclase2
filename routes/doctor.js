@@ -3,8 +3,15 @@ var router = express.Router();
 const model = require('./../models/doctor');
 
 const all = async(req,res) =>{
-    const doctor = await model.get();
-    res.render('doctor', {doctor});
+    var status = true;
+    const doctor = await model.get(status);
+    res.render('doctor', {doctor, status});
+}
+
+const allFalse = async(req,res) =>{
+    var status = false;
+    const doctor = await model.get(status);
+    res.render('doctor', {doctor, status});
 }
 
 const single = async(req,res) => {
@@ -38,6 +45,21 @@ const update = async(req,res) => {
     res.redirect('/doctor');
 }
 
+const borrar = async(req,res) => {
+    const status = false;
+    const id = req.params.id;
+    const borrado = await model.borrar(id, status);
+    res.redirect('/doctor');
+} 
+
+const habilitar = async(req,res) => {
+    const status = true;
+    const id = req.params.id;
+    const borrado = await model.borrar(id, status);
+    res.redirect('/doctor');
+} 
+
+
 
 
 router.get('/', all);
@@ -46,5 +68,8 @@ router.post('/create', create);
 router.get('/create', getCreate);
 router.get('/update/:id', getUpdate);
 router.post('/update/:id', update);
+router.get('/delete/:id', borrar);
+router.get('/disabled', allFalse);
+router.get('/disabled/:id', habilitar);
 
 module.exports = router;

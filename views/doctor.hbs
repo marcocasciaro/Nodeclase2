@@ -1,6 +1,7 @@
-<button type="submit" class="btn btn-primary"><a class="text-light text-decoration-none" href="doctor/create">CREAR Doctor</a> </button>
-
+{{#if status}}
 <div class="container">
+    <button type="submit" class="btn btn-primary"><a class="text-light text-decoration-none" href="/doctor/create">CREAR DOCTOR</a> </button>
+    <button type="submit" class="btn btn-primary"><a class="text-light text-decoration-none" href="/doctor/disabled">DOCTORES DESHABILTADOS</a> </button>
     <div class="row">
             <table class="table table-primary">
                 <thead>
@@ -11,6 +12,7 @@
                     <th scope="col">Sueldo</th>
                     <th scope="col">Aqui</th>
                     <th scope="col">Modificar</th>
+                    <th scope="col">Borrar</th>
                 </thead>
                 <tbody>
                  {{#each doctor}}
@@ -22,6 +24,7 @@
                         <td>{{sueldo}}</td>
                         <td><a href="/doctor/single/{{id}}">Ver Mas</a></td>
                         <td><a href="/doctor/update/{{id}}">Modificar</a></td>
+                        <td><a href="/doctor/delete/{{id}}">Borrar</a></td>
                      </tr>
                 {{/each}}
                 </tbody>
@@ -29,3 +32,33 @@
             
         </div>
     </div>
+    {{else}}
+    <div class="container">
+        <button type="submit" class="btn btn-primary"><a class="text-light text-decoration-none" href="/doctor">DOCTORES HABILITADOS</a> </button>
+        <div class="row">
+            <table class="table table-primary">
+                <thead>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Fecha de nacimiento</th>
+                    <th scope="col">Hospital</th>
+                    <th scope="col">Sueldo</th>
+                    <th scope="col">Habilitar</th>
+                </thead>
+                <tbody>
+                    {{#each doctor}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{nombre}}</td>
+                        <td>{{fecha_de_nacimiento}}</td>
+                        <td>{{nombreH}}</td>
+                        <td>{{sueldo}}</td>
+                        <td><a href="/doctor/disabled/{{id}}">Habilitar</a></td>
+                     </tr>
+                {{/each}}
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+    {{/if}}
