@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const model = require('./../models/doctor');
+const model = require('../../models/doctor');
 
 const all = async(req,res) =>{
     var status = true;

@@ -1,27 +1,27 @@
 const express = require('express');
 const router = express.Router();
-const model = require('../models/usuarios');
+const { auth } = require('../models/usuarios');
+const sha1 = require('sha1');
 
 const get = (req, res) => {
     res.render('login');
 }
 const login = async(req, res) => {
-    console.log(req.body);
-    const loginUser = req.body;
-    const usuarios = await model.get(true);
-    usuarios.forEach(usuario => {
-        if(usuario.user == loginUser.user && usuario.pass == loginUser.pass){
-            console.log("SESION INCIADA!");
-            if(usuario.admin == 1){
-                res.redirect('/doctor');
-            }
-            else{
-                res.redirect('/');
-            }
-        }
-    });
-        console.log ("Usuario o contra incorrectas");
-        res.redirect('/login');
+    try{
+    req.body.pass = sha1(req.body ["pass"]);
+    var obj = req.body;
+    var result = await auth(obj);
+    if(result.length === 0){
+        res.render('login');
+    }
+    const [{id, admin}] = result
+    req.session.idUser = id;
+    req.session.admin = admin;
+    res.redirect('/admin/usuarios');
+    }
+    catch(e){
+        console.log(e);
+    }
 }
 
 router.get('/', get);

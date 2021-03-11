@@ -3,8 +3,8 @@ var router = express.Router();
 const multer = require ('multer');
 const config = {dest : `./public/tmp`};
 const upload = multer(config);
-const model = require('./../models/hospitales');
-const service = require ('./../services/hospitales');
+const model = require('../../models/hospitales');
+const service = require ('../../services/hospitales');
 
 const all = async(req,res) =>{
     const hospitales = await model.get();
@@ -13,7 +13,7 @@ const all = async(req,res) =>{
 
 const create = async (req, res) => {
     const idFile = await service.createHospital(req.body, req.file);
-    res.redirect('/hospitales');
+    res.redirect('/admin/hospitales');
 }
 
 

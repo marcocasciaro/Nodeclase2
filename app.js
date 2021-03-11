@@ -3,15 +3,18 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
 const dotenv = require('dotenv');
+const {verifyAdmin, verifyUser} = require('./midlewares/auth')
 dotenv.config();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const doctorRouter = require('./routes/doctor');
-const usuariosRouter = require('./routes/usuarios');
+const doctorRouter = require('./routes/admin/doctor');
+const usuariosRouter = require('./routes/admin/usuarios');
 const loginRouter = require('./routes/login');
-const hospitalesRouter = require('./routes/hospitales');
+const hospitalesRouter = require('./routes/admin/hospitales');
+const perfilRouter = require ('./routes/perfil');
 
 var app = express();
 
@@ -24,13 +27,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret : 'pass secreto',
+  cookie : { maxAge : null},
+  resave : true ,
+  saveUninitialized : false
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/doctor', doctorRouter)
-app.use('/usuarios', usuariosRouter);
+app.use('/admin/doctor',verifyAdmin, doctorRouter)
+app.use('/admin/usuarios',verifyAdmin, usuariosRouter);
 app.use('/login', loginRouter)
-app.use('/hospitales', hospitalesRouter);
+app.use('/admin/hospitales', verifyAdmin, hospitalesRouter);
+app.use('/perfil', verifyUser, perfilRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
