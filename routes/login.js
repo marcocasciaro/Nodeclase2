@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { auth } = require('../models/usuarios');
 const sha1 = require('sha1');
+const {verifyLogin} = require('./../midlewares/users');
 
 const get = (req, res) => {
     res.render('login');
@@ -25,6 +26,6 @@ const login = async(req, res) => {
 }
 
 router.get('/', get);
-router.post('/', login);
+router.post('/',verifyLogin, login);
 
 module.exports = router;
